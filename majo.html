@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amorcito ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: #f5efe6;
+  text-align: center;
+  overflow-x: hidden;
+  color: #000;
+}
+
+/* Nombre */
+.nombre {
+  font-size: 38px;
+  margin-top: 30px;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Carrusel */
+.carousel {
+  position: relative;
+  width: 90%;
+  max-width: 320px;
+  height: 320px;
+  margin: 25px auto;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* Mensaje */
+.mensaje {
+  margin-top: 10px;
+  font-size: 22px;
+  color: #000;
+  padding: 0 20px;
+}
+
+/* Contador */
+.contador {
+  font-size: 20px;
+  margin-top: 20px;
+  color: #000;
+  padding: 0 20px;
+}
+
+/* Pregunta */
+.pregunta {
+  font-size: 26px;
+  margin-top: 30px;
+  font-weight: bold;
+  color: #000;
+}
+
+.botones {
+  margin-top: 20px;
+}
+
+.botones button {
+  padding: 14px 30px;
+  font-size: 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.si {
+  background: #000;
+  color: white;
+  font-weight: bold;
+}
+
+.no {
+  background: #ddd;
+  color: #000;
+}
+
+/* Animación caída */
+@keyframes caer {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSICA -->
+<audio id="musica" autoplay loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<div class="nombre">Amorcito ❤️</div>
+
+<div class="carousel">
+  <img src="foto1.jpg" class="slide active">
+  <img src="foto2.jpg" class="slide">
+  <img src="foto3.jpg" class="slide">
+  <img src="foto4.jpg" class="slide">
+  <img src="foto5.jpg" class="slide">
+  <img src="foto6.jpg" class="slide">
+</div>
+
+<div class="mensaje">
+  Eres el amor de mi vida, la persona que cambió mi mundo y con quien quiero todo ❤️
+</div>
+
+<div class="contador" id="contador"></div>
+
+<div class="pregunta">
+  ¿Quieres ser mi Valentine? 💌
+</div>
+
+<div class="botones">
+  <button class="si" onclick="si()">Sí 💖</button>
+  <button class="no">No 🙃</button>
+</div>
+
+<script>
+
+// activar música cuando toque pantalla (iPhone lo exige)
+document.body.addEventListener("click", () => {
+  document.getElementById("musica").play();
+});
+
+// carrusel automático
+let index = 0;
+const slides = document.querySelectorAll(".slide");
+
+setInterval(() => {
+  slides[index].classList.remove("active");
+  index = (index + 1) % slides.length;
+  slides[index].classList.add("active");
+}, 2500);
+
+// contador desde 2018
+const fechaInicio = new Date("2018-10-23 00:00:00");
+
+function actualizarContador() {
+  const ahora = new Date();
+  const diferencia = ahora - fechaInicio;
+
+  const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+  const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+  const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
+  const segundos = Math.floor((diferencia / 1000) % 60);
+
+  document.getElementById("contador").innerText =
+    `Desde el 23 de octubre de 2018 han pasado ${dias} días ${horas} horas ${minutos} minutos ${segundos} segundos ❤️`;
+}
+
+setInterval(actualizarContador, 1000);
+
+// lluvia de corazones de colores
+function si() {
+  for (let i = 0; i < 240; i++) {
+    setTimeout(crearCorazonColor, i * 12);
+  }
+}
+
+function crearCorazonColor() {
+
+  const colores = [
+    "#ff0000",   // rojo
+    "#cc0000",   // rojo fuerte
+    "#ff4d6d",   // rosa
+    "#ffc0cb",   // rosa claro
+    "#ffffff"    // blanco
+  ];
+
+  const heart = document.createElement("div");
+  heart.innerHTML = "❤";
+
+  heart.style.position = "fixed";
+  heart.style.top = "-10px";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 22 + 16) + "px";
+  heart.style.color = colores[Math.floor(Math.random() * colores.length)];
+  heart.style.animation = "caer 4s linear forwards";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 4000);
+}
+</script>
+
+</body>
+</html>
